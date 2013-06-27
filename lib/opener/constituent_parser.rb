@@ -62,6 +62,13 @@ module Opener
       return kernel.run(input)
     end
 
+    ##
+    # @return [String]
+    #
+    def output_type
+      return 'text/plain'
+    end
+
     protected
 
 
