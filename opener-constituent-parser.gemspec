@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.test_files  = gem.files.grep(%r{^(test|spec|features)/})
 
   gem.add_dependency 'opener-webservice'
-  gem.add_dependency 'opener-constituent-parser-base'
+  gem.add_dependency 'opener-constituent-parser-base', '>= 0.1.0'
 
   gem.add_development_dependency 'opener-build-tools'
   gem.add_development_dependency 'rake'
