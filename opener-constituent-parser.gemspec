@@ -10,9 +10,13 @@ Gem::Specification.new do |gem|
 
   gem.required_ruby_version = '>= 1.9.2'
 
-  gem.files       = `git ls-files`.split("\n").sort
-  gem.executables = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files  = gem.files.grep(%r{^(test|spec|features)/})
+  gem.files = Dir.glob([
+    'lib/**/*.*',
+    '*.gemspec',
+    'README.md'
+  ])
+
+  gem.executables = Dir.glob('bin/*').map { |f| File.basename(f) }
 
   gem.add_dependency 'opener-webservice'
   gem.add_dependency 'opener-constituent-parser-base', '>= 0.1.0'
