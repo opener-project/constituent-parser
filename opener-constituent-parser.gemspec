@@ -13,7 +13,8 @@ Gem::Specification.new do |gem|
   gem.files = Dir.glob([
     'lib/**/*.*',
     '*.gemspec',
-    'README.md'
+    'README.md',
+    'config.ru'
   ])
 
   gem.executables = Dir.glob('bin/*').map { |f| File.basename(f) }
