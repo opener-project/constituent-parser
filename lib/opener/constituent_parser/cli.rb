@@ -57,12 +57,16 @@ Examples:
 
         stdout, stderr, process = runner.run(input)
 
-        if process.success?
-          puts stdout
+        if process
+          if process.success?
+            puts stdout
 
-          STDERR.puts(stderr) unless stderr.empty?
+            STDERR.puts(stderr) unless stderr.empty?
+          else
+            abort stderr
+          end
         else
-          abort stderr
+          puts stdout
         end
       end
 
