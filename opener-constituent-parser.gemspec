@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
     'lib/**/*.*',
     '*.gemspec',
     'README.md',
+    'exec/**/*',
     'config.ru'
   ])
 
@@ -22,6 +23,8 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'opener-webservice'
   gem.add_dependency 'opener-constituent-parser-base', '>= 0.1.0'
   gem.add_dependency 'puma'
+  gem.add_dependency 'opener-daemons'
+  gem.add_dependency 'opener-core', ['>= 0.1.2']
 
   gem.add_development_dependency 'opener-build-tools'
   gem.add_development_dependency 'rake'
