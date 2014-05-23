@@ -23,7 +23,7 @@ Please bare in mind that all components in OpeNER take KAF as an input and outpu
 
 ### Command line interface
 
-You should now be able to call the constituent parser as a regular shell command: by its name. Once installed the gem normalyl sits in your path so you can call it directly from anywhere.
+You should now be able to call the constituent parser as a regular shell command: by its name. Once installed the gem normaly sits in your path so you can call it directly from anywhere.
 
 This aplication reads a text from standard input in order to identify the language.
 
