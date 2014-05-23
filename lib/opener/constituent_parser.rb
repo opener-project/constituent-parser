@@ -1,5 +1,6 @@
 require 'open3'
 require 'optparse'
+require 'nokogiri'
 require 'opener/constituent_parsers/base'
 
 require_relative 'constituent_parser/version'
@@ -16,20 +17,12 @@ module Opener
     attr_reader :options
 
     ##
-    # Returns the default language to use.
-    #
-    # @return [String]
-    #
-    DEFAULT_LANGUAGE = 'en'.freeze
-
-    ##
     # Hash containing the default options to use.
     #
     # @return [Hash]
     #
     DEFAULT_OPTIONS = {
       :args     => [],
-      :language => DEFAULT_LANGUAGE
     }.freeze
 
     ##
@@ -49,13 +42,13 @@ module Opener
     #
     def run(input)
       args = options[:args].dup
-
-      if language_constant_defined?
-        kernel = language_constant.new(:args => args)
+      language = language(input)
+      if language_constant_defined?(language)
+        kernel = language_constant(language).new(:args => args)
       else
         kernel = ConstituentParsers::Base.new(
           :args     => args,
-          :language => options[:language]
+          :language => language
         )
       end
 
@@ -66,7 +59,7 @@ module Opener
     # @return [String]
     #
     def output_type
-      return 'text/plain'
+      return :xml
     end
 
     protected
@@ -77,22 +70,25 @@ module Opener
     #
     # @return [TrueClass|FalseClass]
     #
-    def language_constant_defined?
-      return ConstituentParsers.const_defined?(language_constant_name)
-    end
-
-    ##
-    # @return [String]
-    #
-    def language_constant_name
-      return options[:language].upcase
+    def language_constant_defined?(language)
+      return ConstituentParsers.const_defined?(language.upcase)
     end
 
     ##
     # @return [Class]
     #
-    def language_constant
-      return ConstituentParsers.const_get(language_constant_name)
+    def language_constant(language)
+      return ConstituentParsers.const_get(language.upcase)
+    end
+    
+    ##
+    # @return the language from the KAF
+    #
+    def language(input)
+      document = Nokogiri::XML(input)
+      language = document.at('KAF').attr('xml:lang')
+
+      return language
     end
   end # ConstituentParser
 end # Opener
