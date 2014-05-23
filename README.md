@@ -5,7 +5,7 @@ The constituent parser wraps several other constituent parsers into a component 
 
 * [English, Spanish and French](https://github.com/opener-project/constituent-parser-base) - OpeNER
 * [German](https://github.com/opener-project/constituent-parser-de) - Stanford Based
-* [Dutch](https://github.com/opener-project/constituent-parser-nl-) Alpino Based
+* [Dutch](https://github.com/opener-project/constituent-parser-nl-) - Alpino Based
 
 
 ### Confused by some terminology?
