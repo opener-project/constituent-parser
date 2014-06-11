@@ -1,3 +1,5 @@
+require 'sinatra/base'
+require 'httpclient'
 require 'opener/webservice'
 
 module Opener
