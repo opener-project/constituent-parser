@@ -11,14 +11,14 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = '>= 1.9.2'
 
   gem.files = Dir.glob([
-    'lib/**/*.*',
+    'lib/**/*',
     '*.gemspec',
     'README.md',
     'exec/**/*',
     'config.ru'
-  ])
+  ]).select { |file| File.file?(file) }
 
-  gem.executables = Dir.glob('bin/*').map { |f| File.basename(f) }
+  gem.executables = Dir.glob('bin/*').map { |file| File.basename(file) }
 
   gem.add_dependency 'opener-webservice'
   gem.add_dependency 'sinatra', '~>1.4.2'
