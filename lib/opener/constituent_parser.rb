@@ -5,6 +5,7 @@ require 'opener/constituent_parsers/base'
 
 require_relative 'constituent_parser/version'
 require_relative 'constituent_parser/cli'
+require_relative 'constituent_parser/error_layer'
 
 module Opener
   ##
@@ -41,18 +42,22 @@ module Opener
     # @return [Array]
     #
     def run(input)
+      begin
       args = options[:args].dup
-      language = language(input)
-      if language_constant_defined?(language)
-        kernel = language_constant(language).new(:args => args)
-      else
-        kernel = ConstituentParsers::Base.new(
-          :args     => args,
-          :language => language
-        )
-      end
+        language = language(input)
+        if language_constant_defined?(language)
+          kernel = language_constant(language).new(:args => args)
+        else
+          kernel = ConstituentParsers::Base.new(
+            :args     => args,
+            :language => language
+          )
+        end
 
-      return kernel.run(input)
+        return kernel.run(input)
+      rescue Exception => error
+        return ErrorLayer.new(input, error.message, self.class).add
+      end
     end
 
     ##
