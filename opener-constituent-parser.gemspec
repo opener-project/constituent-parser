@@ -27,6 +27,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'opener-daemons'
   gem.add_dependency 'opener-core', ['>= 0.1.2']
 
-  gem.add_development_dependency 'opener-build-tools'
   gem.add_development_dependency 'rake'
 end
