@@ -5,7 +5,6 @@ require 'opener/constituent_parsers/base'
 
 require_relative 'constituent_parser/version'
 require_relative 'constituent_parser/cli'
-require_relative 'constituent_parser/error_layer'
 
 module Opener
   ##
@@ -56,7 +55,7 @@ module Opener
 
         return kernel.run(input)
       rescue Exception => error
-        return ErrorLayer.new(input, error.message, self.class).add
+        return Opener::Core::ErrorLayer.new(input, error.message, self.class).add
       end
     end
 

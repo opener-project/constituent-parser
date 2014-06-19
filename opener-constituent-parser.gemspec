@@ -27,6 +27,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'nokogiri'
   gem.add_dependency 'httpclient'
   gem.add_dependency 'opener-daemons'
+  gem.add_dependency 'opener-core', "~> 1.0"
 
   gem.add_development_dependency 'rake'
 end
