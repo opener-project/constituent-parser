@@ -23,7 +23,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'opener-webservice'
   gem.add_dependency 'sinatra', '~>1.4.2'
   gem.add_dependency 'opener-constituent-parser-base', '>= 0.1.0'
-  gem.add_dependency 'opener-constituent-parser-nl'
+  gem.add_dependency 'opener-constituent-parser-nl', '~> 1.0'
   gem.add_dependency 'puma'
   gem.add_dependency 'nokogiri'
   gem.add_dependency 'httpclient'
