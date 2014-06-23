@@ -40,7 +40,7 @@ module Opener
     # STDERR and an object containing process information.
     #
     # @param [String] input
-    # @return [Array]
+    # @return [String]
     #
     def run(input)
       begin
@@ -86,7 +86,7 @@ module Opener
     def language_constant(language)
       return ConstituentParsers.const_get(language.upcase)
     end
-    
+
     ##
     # @return the language from the KAF
     #
