@@ -3,6 +3,7 @@ require 'optparse'
 require 'nokogiri'
 require 'opener/constituent_parsers/base'
 require 'opener/constituent_parsers/nl'
+require 'opener/constituent_parsers/de'
 require 'opener/core'
 
 require_relative 'constituent_parser/version'
