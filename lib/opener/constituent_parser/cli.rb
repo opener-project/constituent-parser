@@ -1,89 +1,63 @@
 module Opener
   class ConstituentParser
     ##
-    # CLI wrapper around {Opener::ConstituentParser} using OptionParser.
+    # CLI wrapper around {Opener::ConstituentParser} using Slop.
     #
-    # @!attribute [r] options
-    #  @return [Hash]
-    # @!attribute [r] option_parser
-    #  @return [OptionParser]
+    # @!attribute [r] parser
+    #  @return [Slop]
     #
     class CLI
-      attr_reader :options, :option_parser
+      attr_reader :parser
+
+      def initialize
+        @parser = configure_slop
+      end
 
       ##
-      # @param [Hash] options
+      # @param [Array] argv
       #
-      def initialize(options = {})
-        @options = DEFAULT_OPTIONS.merge(options)
+      def run(argv = ARGV)
+        parser.parse(argv)
+      end
 
-        @option_parser = OptionParser.new do |opts|
-          opts.program_name   = 'constituent-parser'
-          opts.summary_indent = '  '
+      ##
+      # @return [Slop]
+      #
+      def configure_slop
+        return Slop.new(:strict => false, :indent => 2, :help => true) do
+          banner 'Usage: constituent-parser [OPTIONS]'
 
-          opts.on('-h', '--help', 'Shows this help message') do
-            show_help
-          end
+          separator <<-EOF.chomp
 
-          opts.on('-v', '--version', 'Shows the current version') do
-            show_version
-          end
+About:
 
-          opts.on(
-            '-l',
-            '--language [VALUE]',
-            'Uses this specific language'
-          ) do |value|
-            @options[:language] = value
-          end
+    Constituent parser for various languages such as English and Dutch. This
+    command reads input from STDIN.
 
-          opts.separator <<-EOF
+Example:
 
-Examples:
-
-  cat input_file.kaf | #{opts.program_name}
-  cat input_file.kaf | #{opts.program_name} -l nl
+    cat some_file.kaf | constituent-parser
           EOF
-        end
-      end
 
-      ##
-      # @param [String] input
-      #
-      def run(input)
-        option_parser.parse!(options[:args])
+          separator "\nOptions:\n"
 
-        runner = ConstituentParser.new(options)
-
-        stdout, stderr, process = runner.run(input)
-
-        if process
-          if process.success?
-            puts stdout
-
-            STDERR.puts(stderr) unless stderr.empty?
-          else
-            abort stderr
+          on :v, :version, 'Shows the current version' do
+            abort "property-tagger v#{VERSION} on #{RUBY_DESCRIPTION}"
           end
-        else
-          puts stdout
+
+          on :l=, :language=, 'Sets a specific language to use', :as => String
+
+          run do |opts, args|
+            parser = ConstituentParser.new(
+              :args     => args,
+              :language => opts[:language]
+            )
+
+            input = STDIN.tty? ? nil : STDIN.read
+
+            puts parser.run(input)
+          end
         end
-      end
-
-      private
-
-      ##
-      # Shows the help message and exits the program.
-      #
-      def show_help
-        abort option_parser.to_s
-      end
-
-      ##
-      # Shows the version and exits the program.
-      #
-      def show_version
-        abort "#{option_parser.program_name} v#{VERSION} on #{RUBY_DESCRIPTION}"
       end
     end # CLI
   end # ConstituentParser

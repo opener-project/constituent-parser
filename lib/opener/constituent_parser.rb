@@ -1,10 +1,9 @@
 require 'open3'
-require 'optparse'
+require 'slop'
 require 'nokogiri'
 require 'opener/constituent_parsers/base'
 require 'opener/constituent_parsers/nl'
 require 'opener/constituent_parsers/de'
-require 'opener/core'
 
 require_relative 'constituent_parser/version'
 require_relative 'constituent_parser/cli'
@@ -25,7 +24,7 @@ module Opener
     # @return [Hash]
     #
     DEFAULT_OPTIONS = {
-      :args     => [],
+      :args => [],
     }.freeze
 
     ##
@@ -37,40 +36,29 @@ module Opener
     end
 
     ##
-    # Processes the input and returns an array containing the output of STDOUT,
-    # STDERR and an object containing process information.
+    # Processes the input KAF document and returns a new KAF document as a
+    # String.
     #
     # @param [String] input
     # @return [String]
     #
     def run(input)
-      begin
-      args = options[:args].dup
-        language = language(input)
-        if language_constant_defined?(language)
-          kernel = language_constant(language).new(:args => args)
-        else
-          kernel = ConstituentParsers::Base.new(
-            :args     => args,
-            :language => language
-          )
-        end
+      args     = options[:args].dup
+      language = language(input)
 
-        return kernel.run(input)
-      rescue Exception => error
-        return Opener::Core::ErrorLayer.new(input, error.message, self.class).add
+      if language_constant_defined?(language)
+        kernel = language_constant(language).new(:args => args)
+      else
+        kernel = ConstituentParsers::Base.new(
+          :args     => args,
+          :language => language
+        )
       end
-    end
 
-    ##
-    # @return [String]
-    #
-    def output_type
-      return :xml
+      return kernel.run(input)
     end
 
     protected
-
 
     ##
     # Returns `true` if the current language has a dedicated kernel class.

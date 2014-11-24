@@ -2,6 +2,6 @@
 
 require_relative '../lib/opener/constituent_parser'
 
-cli = Opener::ConstituentParser::CLI.new(:args => ARGV)
+cli = Opener::ConstituentParser::CLI.new
 
-cli.run(STDIN.tty? ? nil : STDIN.read)
+cli.run
