@@ -1,5 +1,5 @@
 module Opener
   class ConstituentParser
-    VERSION = '1.2.3'
+    VERSION = '2.0.0'
   end # ConstituentParser
 end # Opener
