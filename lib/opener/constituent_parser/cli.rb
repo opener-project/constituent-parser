@@ -42,7 +42,7 @@ Example:
           separator "\nOptions:\n"
 
           on :v, :version, 'Shows the current version' do
-            abort "property-tagger v#{VERSION} on #{RUBY_DESCRIPTION}"
+            abort "constituent-parser v#{VERSION} on #{RUBY_DESCRIPTION}"
           end
 
           on :l=, :language=, 'Sets a specific language to use', :as => String
