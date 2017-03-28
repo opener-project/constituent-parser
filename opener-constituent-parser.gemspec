@@ -22,6 +22,8 @@ Gem::Specification.new do |gem|
 
   gem.executables = Dir.glob('bin/*').map { |file| File.basename(file) }
 
+  gem.add_dependency 'newrelic_rpm', '~> 3.0'
+
   gem.add_dependency 'opener-constituent-parser-base', ['~> 1.0', '>= 1.0.6']
   gem.add_dependency 'opener-constituent-parser-nl', '~> 1.0'
   gem.add_dependency 'opener-constituent-parser-de', '~> 1.1'
